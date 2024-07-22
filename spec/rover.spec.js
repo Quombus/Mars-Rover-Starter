@@ -12,7 +12,7 @@ describe("Rover class", function() {
 
 
 
-it ("constructor sets position and default values for mode and generatorWatts.", function(){
+it ("constructor sets position and default values for mode and generatorWatts.", function(){ // 7
     let roverObject = new Rover(12345);
 
     expect(roverObject.position).toBe(12345);
@@ -20,17 +20,28 @@ it ("constructor sets position and default values for mode and generatorWatts.",
     expect(roverObject.generatorWatts).toEqual(110);
 });
 
-it ("response returned by receiveMessage contains the name of the message", function() {
+it ("response returned by receiveMessage contains the name of the message", function() { // 8
     let roverObject = new Rover(12345);
     let messageObject = new Message("NAME", [command, command]);
 
     expect(roverObject.recieveMessage(messageObject)).toEqual("NAME");
 });
 
-it ("response returned by receiveMessage includes two results if two commands are sent in the message", function() {
-    let roverObject = new Rover(12345);
-    let messageObject = new Message("NAME", [command, command]);
-})
+it ("response returned by receiveMessage includes two results if two commands are sent in the message", function() { // 9
+    let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+let message = new Message('Test message with two commands', commands);
+let rover = new Rover(98382);    // Passes 98382 as the rover's position.
+let response = rover.receiveMessage(message);
+
+for (let i = 0; i < 2; i++) {
+    if ()
+}
+
+});
+
+
+
+
 
 
 });
