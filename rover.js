@@ -1,5 +1,5 @@
 const Message = require('./message');
-const Command = require('./command');
+const Command = require('./command'); 
 
 
 let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
