@@ -1,16 +1,6 @@
 const Message = require('./message');
 const Command = require('./command'); 
 
-
-let commands = [
-   new Command('MOVE', 4321),
-   new Command('STATUS_CHECK'),
-   new Command('MODE_CHANGE', 'LOW_POWER'),
-   new Command('MOVE', 3579),
-   new Command('STATUS_CHECK')
-];
-let message = new Message('TA power', commands);
-
 class Rover {
    // Write code here!
    constructor(position) {
@@ -57,18 +47,5 @@ return receiveMessageObject = {
 };
 }
 }
-
-let rover = new Rover(100);
-let response = rover.receiveMessage(message);
-console.dir(response, { depth: null });
-
-// console.log(responseexpect(response.message).toEqual('TA power');
-// expect(response.results[0].completed).toBeTruthy();
-// expect(response.results[1].roverStatus.position).toEqual(4321);
-// expect(response.results[2].completed).toBeTruthy();
-// expect(response.results[3].completed).toBeFalsy();
-// expect(response.results[4].roverStatus.position).toEqual(4321);
-// expect(response.results[4].roverStatus.mode).toEqual('LOW_POWER');
-// expect(response.results[4].roverStatus.generatorWatts).toEqual(110););
 module.exports = Rover;
 
