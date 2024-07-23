@@ -2,8 +2,14 @@ const Message = require('./message');
 const Command = require('./command'); 
 
 
-let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
-let message = new Message('Test message with two commands', commands);
+let commands = [
+   new Command('MOVE', 4321),
+   new Command('STATUS_CHECK'),
+   new Command('MODE_CHANGE', 'LOW_POWER'),
+   new Command('MOVE', 3579),
+   new Command('STATUS_CHECK')
+];
+let message = new Message('TA power', commands);
 
 class Rover {
    // Write code here!
@@ -15,8 +21,7 @@ class Rover {
        receiveMessage(message) {
        let receiveMessageObject = {};
         let results = [];
-        let roverStatus = {};
-
+   
        for (let i = 0; i < message.commands.length; i++) { 
         if (message.commands[i].commandType == 'MODE_CHANGE' && message.commands[i].value == 'LOW_POWER') { 
             this.mode = 'LOW_POWER';
@@ -29,13 +34,12 @@ class Rover {
             results.push(completedObject);   
            }
            if (message.commands[i].commandType == 'STATUS_CHECK') {
-            let completedObject = {completed : true};
-            results.push(completedObject);  
-            roverStatus.mode = this.mode;
-            roverStatus.generatorWatts = this.generatorWatts;
-            roverStatus.position = this.position;
-            results.push(roverStatus);
-           //setup roverStatus key:value, with the value set to an object
+            let statusCheckObject = {
+               completed: true,
+               roverStatus : {mode:this.mode, generatorWatts:this.generatorWatts, position:this.position
+               }
+               };
+               results.push(statusCheckObject);
            }
            if (message.commands[i].commandType == 'MOVE' && this.mode =='NORMAL') {
             this.position = message.commands[i].value;
@@ -54,9 +58,17 @@ return receiveMessageObject = {
 }
 }
 
-let rover = new Rover(8888);    // Passes 98382 as the rover's position.
+let rover = new Rover(100);
 let response = rover.receiveMessage(message);
+console.dir(response, { depth: null });
 
-
-console.log(rover.mode);
+// console.log(responseexpect(response.message).toEqual('TA power');
+// expect(response.results[0].completed).toBeTruthy();
+// expect(response.results[1].roverStatus.position).toEqual(4321);
+// expect(response.results[2].completed).toBeTruthy();
+// expect(response.results[3].completed).toBeFalsy();
+// expect(response.results[4].roverStatus.position).toEqual(4321);
+// expect(response.results[4].roverStatus.mode).toEqual('LOW_POWER');
+// expect(response.results[4].roverStatus.generatorWatts).toEqual(110););
 module.exports = Rover;
+

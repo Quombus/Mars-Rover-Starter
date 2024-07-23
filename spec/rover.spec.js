@@ -45,15 +45,16 @@ expect (count).toEqual(2);
 
 // 10
 test("responds correctly to the status check command", function () {
-let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
-let message = new Message('Test message with two commands', commands);
-let rover = new Rover(98382);    // Passes 98382 as the rover's position.
+let commands = [new Command('STATUS_CHECK')];
+let message = new Message('Status Check', commands);
+let rover = new Rover(98798);    // Passes 98382 as the rover's position.
 let response = rover.receiveMessage(message);
 
 expect (response.results).toEqual([
-    { completed: true },
-    { completed: true },
-    { mode: 'LOW_POWER', generatorWatts: 110, position: 98382 }
+    {
+        completed: true,
+        roverStatus: { mode: 'NORMAL', generatorWatts: 110, position: 98798 }
+      }
   ]);
 });
 
